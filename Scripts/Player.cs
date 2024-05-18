@@ -1,11 +1,15 @@
 using Godot;
 using System;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 public partial class Player : CharacterBody2D
 {
   public const float Speed = 130.0f;
   public const float JumpVelocity = -300.0f;
   private AnimatedSprite2D _Sprite;
+
+  private bool IsDead = false;
 
   // Get the gravity from the project settings to be synced with RigidBody nodes.
   public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -41,23 +45,40 @@ public partial class Player : CharacterBody2D
     }
 
     // Handle animations
-    if (IsOnFloor())
+    if (IsDead)
     {
-      if (direction != Vector2.Zero)
-      {
-        _Sprite.Play("Run");
-      }
-      else
-      {
-        _Sprite.Play("Idle");
-      }
+      _Sprite.Play("Death");
     }
     else
     {
-      _Sprite.Play("Jump");
+      if (IsOnFloor())
+      {
+        if (direction != Vector2.Zero)
+        {
+          _Sprite.Play("Run");
+        }
+        else
+        {
+          _Sprite.Play("Idle");
+        }
+      }
+      else
+      {
+        _Sprite.Play("Jump");
+      }
     }
 
     Velocity = velocity;
     MoveAndSlide();
+  }
+
+  private void OnHurt()
+  {
+    IsDead = true;
+    Vector2 velocity = Velocity;
+    velocity.Y = JumpVelocity / 2;
+    Velocity = velocity;
+    MoveAndSlide();
+    GetNode<CollisionShape2D>("CollisionShape2D").QueueFree();
   }
 }

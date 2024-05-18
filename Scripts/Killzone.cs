@@ -3,10 +3,14 @@ using System;
 
 public partial class Killzone : Area2D
 {
+
   private void _OnBodyEntered(Node2D body)
   {
     Engine.TimeScale = 0.5f;
-    body.GetNode<CollisionShape2D>("CollisionShape2D").QueueFree();
+    if (body.HasMethod("OnHurt"))
+    {
+      body.Call("OnHurt");
+    }
     GetNode<Timer>("Timer").Start();
   }
 

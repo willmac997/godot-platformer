@@ -514,7 +514,7 @@ theme_override_font_sizes/font_size = 8
 text = "Coins:"
 
 [node name="Player" parent="." instance=ExtResource("2_sy6yt")]
-position = Vector2(-20, -2)
+position = Vector2(-21, 5)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(4, 4)
@@ -595,9 +595,6 @@ autoplay = "Move"
 [node name="Slime" parent="." instance=ExtResource("7_pxsmx")]
 position = Vector2(603, 72)
 
-[node name="Slime2" parent="." instance=ExtResource("7_pxsmx")]
-position = Vector2(89, 24)
-
 [node name="Label" type="Label" parent="."]
 offset_left = -138.0
 offset_top = -32.0
@@ -606,5 +603,5 @@ offset_bottom = -13.0
 theme_override_colors/font_color = Color(0.0980392, 0.313726, 0.752941, 1)
 theme_override_fonts/font = ExtResource("9_ajlsv")
 theme_override_font_sizes/font_size = 8
-text = "Press Z or 
+text = "Press Z or
 Up to Jump"
