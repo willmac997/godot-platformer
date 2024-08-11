@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Slime : Node2D
 {
@@ -22,6 +21,7 @@ public partial class Slime : Node2D
   // Called every frame. 'delta' is the elapsed time since the previous frame.
   public override void _Process(double delta)
   {
+    GD.Print(_RayCastLeft);
     if (_RayCastLeft.IsColliding()) _Direction = 1;
     if (_RayCastRight.IsColliding()) _Direction = -1;
     _AnimatedSprite2D.FlipH = _Direction == 1 ? false : true;

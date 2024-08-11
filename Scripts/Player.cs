@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
 
 public partial class Player : CharacterBody2D
 {
@@ -24,12 +21,10 @@ public partial class Player : CharacterBody2D
     Vector2 velocity = Velocity;
 
     // Add the gravity.
-    if (!IsOnFloor())
-      velocity.Y += gravity * (float)delta;
+    if (!IsOnFloor()) velocity.Y += gravity * (float)delta;
 
     // Handle Jump.
-    if (Input.IsActionJustPressed("Jump") && IsOnFloor())
-      velocity.Y = JumpVelocity;
+    if (Input.IsActionJustPressed("Jump") && IsOnFloor()) velocity.Y = JumpVelocity;
 
     // Get the input direction and handle the movement/deceleration.
     // As good practice, you should replace UI actions with custom gameplay actions.
@@ -39,33 +34,18 @@ public partial class Player : CharacterBody2D
       _Sprite.FlipH = direction.X < 0;
       velocity.X = direction.X * Speed;
     }
-    else
-    {
-      velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-    }
+    else velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 
     // Handle animations
-    if (IsDead)
-    {
-      _Sprite.Play("Death");
-    }
+    if (IsDead) _Sprite.Play("Death");
     else
     {
       if (IsOnFloor())
       {
-        if (direction != Vector2.Zero)
-        {
-          _Sprite.Play("Run");
-        }
-        else
-        {
-          _Sprite.Play("Idle");
-        }
+        if (direction != Vector2.Zero) _Sprite.Play("Run");
+        else _Sprite.Play("Idle");
       }
-      else
-      {
-        _Sprite.Play("Jump");
-      }
+      else _Sprite.Play("Jump");
     }
 
     Velocity = velocity;
